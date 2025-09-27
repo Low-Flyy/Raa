@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="theme-color" content="#0f1724">
+  <title>Selamat Ulang Tahun,Raa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#071226; /* deep navy */
+      --card:#0b1220;
+      --accent:#ff6b9a;
+      --muted:#9aa6b2;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:var(--bg);-webkit-font-smoothing:antialiased}
+
+    /* container */
+    .wrap{width:100%;max-width:480px;margin:0 auto;padding:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+
+    /* header photo area - stacked for mobile */
+    .hero{position:relative;display:flex;flex-direction:column;gap:12px;padding:14px}
+    .photo{width:100%;height:320px;border-radius:12px;background-size:cover;background-position:center;box-shadow:inset 0 0 30px rgba(0,0,0,0.35)}
+    .photo.small{height:160px}
+
+    /* message area */
+    .content{padding:18px;display:flex;flex-direction:column;gap:12px}
+    h1{font-size:22px;margin:0;line-height:1.1;color:#fff}
+    p.lead{margin:0;color:var(--muted);font-size:14px}
+    .message{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;min-height:160px;display:flex;flex-direction:column;justify-content:center}
+    .message p{font-size:16px;line-height:1.5;margin:0;color:#f4fbff}
+    .signature{margin-top:12px;text-align:right;font-weight:700;color:var(--accent);font-size:15px}
+
+    /* big touch-friendly button */
+    .actions{display:flex;gap:12px;padding:14px}
+    .btn{flex:1;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:16px;cursor:pointer;background:linear-gradient(90deg,var(--accent),#ff8fb0);color:#061122}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* floating hearts container */
+    .hearts{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:visible}
+
+    /* animations */
+    @keyframes rise{
+      0%{transform:translateY(0) scale(1);opacity:1}
+      100%{transform:translateY(-420px) scale(1.6);opacity:0}
+    }
+
+    .heart{position:absolute;font-size:28px;animation:rise 2800ms linear forwards}
+
+    /* responsive tweaks for smaller devices */
+    @media (max-width:420px){
+      .photo{height:260px}
+      .photo.small{height:140px}
+      h1{font-size:20px}
+      .message p{font-size:15px}
+      .btn{padding:12px;font-size:15px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="hero">
+        <!-- Ganti 'photo1.jpg' dan 'photo2.jpg' dengan file foto pacarmu (letakkan di folder yang sama dengan file .html) -->
+        <div id="photoA" class="photo" style="background-image:url('photo1.jpg')" aria-hidden="true"></div>
+        <div id="photoB" class="photo small" style="background-image:url('photo2.jpg')" aria-hidden="true"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:6px 2px">
+          <h1>Selamat Ulang Tahun,Raa</h1>
+          <p class="lead">Semoga semua mimpi nya tercapai ya Raa,di Berkati setiap langkah nya.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="message" id="messageBox">
+          <p id="messageText">Hai, selamat ulang tahun yaa Raa!  
+          Semoga harimu penuh hal-hal indah kayak senyum mu yang selalu bikin dunia jadi lebih cerah.  
+          Aku nggak jago kata-kata, tapi aku jago buat nyimpan rasa hehe.  
+          Semoga tahun ini bawa banyak kebahagiaan, mimpi yang tercapai, dan momen seru bareng orang-orang yang kau sayang (termasuk aku… kalau boleh hehe).</p>
+          <div class="signature" id="signature">— Tian</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="bigLoveBtn" aria-label="Kirim Pelukan">Tekan Raa 🎉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    // touch-friendly large burst of hearts optimized for Android mobile
+    const heartsContainer = document.getElementById('hearts');
+    function spawnHearts(count){
+      for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className='heart';
+        h.innerText='💖';
+        const size = Math.floor(22 + Math.random()*28);
+        h.style.fontSize = size + 'px';
+        const left = Math.floor(Math.random()*90) + 'vw';
+        h.style.left = left;
+        h.style.top = (100 + Math.random()*40) + 'vh';
+        h.style.transform = 'translateY(0)';
+        h.style.opacity = 1;
+        h.style.filter = 'drop-shadow(0 8px 20px rgba(255,107,154,0.15))';
+        h.style.color = `hsl(${Math.floor(Math.random()*30)+330},80%,70%)`;
+        heartsContainer.appendChild(h);
+        // remove after animation
+        setTimeout(()=>{h.remove()},3000 + Math.random()*400);
+      }
+    }
+
+    // big button -> multiple bursts for playful effect
+    document.getElementById('bigLoveBtn').addEventListener('click', ()=>{
+      // small immediate burst
+      spawnHearts(14);
+      // follow-up bursts for more life
+      setTimeout(()=>spawnHearts(10),250);
+      setTimeout(()=>spawnHearts(8),600);
+      // subtle haptic feedback for supporting devices (if available)
+      if(navigator.vibrate) navigator.vibrate([30,20,30]);
+    });
+
+    // auto-scale images for performance on mobile (if images are heavy)
+    // browser will use CSS background-size:cover; advise user to use <2000px wide images for faster load on Android
+  </script>
+</body>
+</html>
